@@ -22,7 +22,12 @@ jobs:
               git clone https://github.com/VeronicaAlarconA/taller3.git
             fi
 
-            cd taller3
+            cd taller3 || { echo "No se pudo entrar al repositorio"; exit 1; }
+            echo "Actualizando el repositorio..."
             git pull origin main
-            docker compose up -d
+
+            echo "Levantando contenedores..."
+            docker compose up -d || { echo "Error al ejecutar docker compose"; exit 1; }
+
+            echo "Contenedores en ejecución:"
             docker ps
