@@ -8,20 +8,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH into EC2 and deploy container
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd /home/ubuntu
+      - name: SSH into EC2 and deploy container
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user
 
-          if [ ! -d "taller3" ]; then
-            echo "Repositorio no encontrado. Clonando..."
-            git clone https://github.com/VeronicaAlarconA/taller3.git
-          fi
+            if [ ! -d "taller3" ]; then
+              echo "Repositorio no encontrado. Clonando..."
+              git clone https://github.com/VeronicaAlarconA/taller3.git
+            fi
 
-          cd taller3
-          git pull origin main
-          docker compose up -d
+            cd taller3
+            git pull origin main
+            docker compose up -d
+            docker ps
