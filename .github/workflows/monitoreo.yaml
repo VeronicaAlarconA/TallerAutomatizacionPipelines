@@ -1,0 +1,20 @@
+name: Monitoreo
+
+on:
+  push:
+    paths:
+      - 'monitoring/**' 
+jobs:
+  deploy-monitoring:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: SSH into EC2 and deploy monitoring services
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          git pull
+          docker compose up -d prometheus grafana
