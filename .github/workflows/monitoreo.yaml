@@ -16,10 +16,5 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          script: |
-            cd /home/ec2-user/taller3
-            git pull origin main
-             docker compose pull      # Si usas imágenes desde GHCR
-             docker compose up -d     # Levanta TODOS los servicios
-             docker ps
-
+          git pull
+          docker compose up -d prometheus grafana
